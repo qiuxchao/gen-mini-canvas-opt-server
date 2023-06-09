@@ -19,9 +19,9 @@
   excludeProjects: string[];
   /** 是否激活(排除) */
   isActive: boolean;
-  /** 创建时间(排除) */
+  /** 创建时间 */
   createTime: number;
-  /** 更新时间(排除) */
+  /** 更新时间 */
   updateTime: number;
 }
 ```
