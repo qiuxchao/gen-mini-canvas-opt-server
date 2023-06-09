@@ -3,8 +3,9 @@ import { Exclude } from 'class-transformer';
 
 /** 权限
  * - `delete`: 删除（有此权限才能删除项目和画板）
+ * - `user`: 用户（有此权限才能查看用户列表、对用户进行操作）
  */
-export type UserPermission = 'delete';
+export type UserPermission = 'delete' | 'user';
 
 @Entity('user')
 export class User {

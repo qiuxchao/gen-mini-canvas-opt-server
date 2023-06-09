@@ -15,6 +15,7 @@ import { SignUpDto } from './dto/sign-up.dto';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  /** 登录 */
   @Public()
   @Post('sign-in')
   @HttpCode(HttpStatus.OK)
@@ -22,6 +23,7 @@ export class AuthController {
     return this.authService.signIn(signInDto);
   }
 
+  /** 注册 */
   @Public()
   @Post('sign-up')
   @HttpCode(HttpStatus.CREATED)

@@ -42,6 +42,7 @@ export class AuthService {
   async generateToken(user: User) {
     const token = await this.signToken<Partial<ActiveUserData>>(user.id, {
       username: user.username,
+      permissions: user.permissions.join(','),
     });
     return {
       token,
