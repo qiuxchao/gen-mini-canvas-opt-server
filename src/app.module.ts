@@ -32,6 +32,7 @@ import { DrawBoradModule } from './draw-borad/draw-borad.module';
           database: process.env.DB_DATABASE,
           entities: [__dirname + '/**/*.entity{.ts,.js}'],
           synchronize: true,
+          useUnifiedTopology: true,
         } as unknown as MongoConnectionOptions),
     }),
     UserModule,

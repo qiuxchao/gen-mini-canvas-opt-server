@@ -12,6 +12,6 @@ async function bootstrap() {
   app.useGlobalInterceptors(new Response());
   // 异常过滤器
   app.useGlobalFilters(new HttpFilter());
-  await app.listen(3000);
+  await app.listen(6923);
 }
 bootstrap();

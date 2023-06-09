@@ -13,16 +13,16 @@ export class Project {
   @Column()
   permissions: string[];
 
+  /** 创建时间 */
   @Column({
     default: Date.now(),
     update: false,
   })
-  /** 创建时间 */
   createTime: number;
 
+  /** 更新时间 */
   @Column({
     default: Date.now(),
   })
-  /** 更新时间 */
   updateTime: number;
 }

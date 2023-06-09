@@ -23,7 +23,7 @@ export class HttpFilter implements ExceptionFilter {
       time: new Date().getTime(),
       success: false,
       path: request.url,
-      status,
+      code: status,
     });
   }
 }

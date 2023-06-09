@@ -15,7 +15,7 @@ export class DrawBorad {
   cover: string;
 
   /** 所属项目id */
-  @Column()
+  @ObjectIdColumn()
   @Exclude()
   projectId: ObjectId;
 
@@ -39,16 +39,16 @@ export class DrawBorad {
   @Exclude()
   data: string;
 
+  /** 创建时间 */
   @Column({
     default: Date.now(),
     update: false,
   })
-  /** 创建时间 */
   createTime: number;
 
+  /** 更新时间 */
   @Column({
     default: Date.now(),
   })
-  /** 更新时间 */
   updateTime: number;
 }

@@ -4,7 +4,7 @@ import { Exclude } from 'class-transformer';
 /** 权限
  * - `delete`: 删除（有此权限才能删除项目和画板）
  */
-type Permission = 'delete';
+export type UserPermission = 'delete';
 
 @Entity('user')
 export class User {
@@ -26,7 +26,7 @@ export class User {
 
   /** 权限 */
   @Column()
-  permissions: Permission[];
+  permissions: UserPermission[];
 
   /** 不拥有的项目（项目id列表） */
   @Column()
@@ -38,16 +38,16 @@ export class User {
   @Exclude()
   isActive: boolean;
 
+  /** 创建时间 */
   @Column({
     default: Date.now(),
     update: false, // 不更新
   })
-  /** 创建时间 */
   createTime: number;
 
+  /** 更新时间 */
   @Column({
     default: Date.now(),
   })
-  /** 更新时间 */
   updateTime: number;
 }
