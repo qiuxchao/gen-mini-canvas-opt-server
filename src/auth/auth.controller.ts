@@ -19,8 +19,8 @@ export class AuthController {
   }
 
   /** 注册 */
-  @Public()
-  // @Permission('user:create')
+  // @Public()
+  @Permission('user:create')
   @Post('sign-up')
   @HttpCode(HttpStatus.CREATED)
   async signUp(@Body(ValidationPipe) signUpDto: SignUpDto) {
