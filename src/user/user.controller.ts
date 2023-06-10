@@ -8,6 +8,7 @@ import { Permission } from 'src/common/decorators/permission.decorator';
 import { UserPermissionDto } from './dto/user-permission.dto';
 import { UserExcludeProjectDto } from './dto/user-exclude-project-dto';
 import { UserUpdateDto } from './dto/user-update-dto';
+import { UserChangePasswordDto } from './dto/user-change-password-dto';
 
 @Controller('user')
 export class UserController {
@@ -67,5 +68,14 @@ export class UserController {
     @Body(ValidationPipe) body: UserExcludeProjectDto,
   ): Promise<any> {
     return this.userService.setExcludeProjects(body);
+  }
+
+  /** 修改密码 */
+  @Post('password')
+  async changePassword(
+    @Req() request,
+    @Body(ValidationPipe) body: UserChangePasswordDto,
+  ): Promise<any> {
+    return this.userService.changePassword(request.user, body);
   }
 }

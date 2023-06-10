@@ -6,12 +6,15 @@ import { ObjectId } from 'mongodb';
 import { UserPermissionDto } from './dto/user-permission.dto';
 import { UserExcludeProjectDto } from './dto/user-exclude-project-dto';
 import { UserUpdateDto } from './dto/user-update-dto';
+import { UserChangePasswordDto } from './dto/user-change-password-dto';
+import { HashingService } from 'src/auth/hashing.service';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: MongoRepository<User>,
+    private readonly hashingService: HashingService,
   ) {}
 
   /** 获取用户列表 */
@@ -79,6 +82,25 @@ export class UserService {
           : user.excludeProjects.filter(
               (excludeProject) => !excludeProjects.includes(excludeProject),
             ),
+      updateTime: new Date().getTime(),
+    });
+    return true;
+  }
+
+  /** 修改密码 */
+  async changePassword(user: User, body: UserChangePasswordDto): Promise<any> {
+    const { oldPassword, newPassword } = body;
+    const isPasswordValid = await this.hashingService.compare(
+      oldPassword,
+      user.password,
+    );
+    if (!isPasswordValid)
+      throw new HttpException('旧密码错误', HttpStatus.BAD_REQUEST);
+    const hashedPassword = await this.hashingService.hash(newPassword);
+    const { id, ...restUser } = user;
+    await this.userRepository.update(id, {
+      ...restUser,
+      password: hashedPassword,
       updateTime: new Date().getTime(),
     });
     return true;
