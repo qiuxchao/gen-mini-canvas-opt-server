@@ -2,10 +2,24 @@ import { Entity, Column, ObjectIdColumn, ObjectId } from 'typeorm';
 import { Exclude } from 'class-transformer';
 
 /** 权限
- * - `delete`: 删除（有此权限才能删除项目和画板）
- * - `user`: 用户（有此权限才能查看用户列表、对用户进行操作）
+ * - `user:list`: 查看用户列表
+ * - `user:delete`: 删除用户
+ * - `user:update`: 更新用户
+ * - `user:create`: 创建用户
+ * - `user:permission`: 设置用户权限
+ * - `user:exclude-project`: 设置不拥有的项目
+ * - `project:delete`: 删除项目
+ * - `draw:delete`: 删除画板
  */
-export type UserPermission = 'delete' | 'user';
+export type UserPermission =
+  | 'user:list'
+  | 'user:delete'
+  | 'user:update'
+  | 'user:create'
+  | 'user:permission'
+  | 'user:exclude-project'
+  | 'project:delete'
+  | 'draw:delete';
 
 @Entity('user')
 export class User {

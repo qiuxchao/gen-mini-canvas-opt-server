@@ -11,6 +11,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { JwtStrategy } from './jwt.strategy';
 import { HashingService } from './hashing.service';
+import { PermissionGuard } from './guards/permission.guard';
 
 @Module({
   imports: [
@@ -25,6 +26,10 @@ import { HashingService } from './hashing.service';
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: PermissionGuard,
     },
     AuthService,
     JwtStrategy,

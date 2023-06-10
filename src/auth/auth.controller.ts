@@ -1,15 +1,10 @@
-import {
-  Body,
-  Controller,
-  HttpCode,
-  HttpStatus,
-  Post,
-  ValidationPipe,
-} from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Public } from 'src/common/decorators/public.decorator';
 import { SignInDto } from './dto/sign-in.dto';
 import { SignUpDto } from './dto/sign-up.dto';
+import { ValidationPipe } from 'src/common/pipes/validation.pipe';
+import { Permission } from 'src/common/decorators/permission.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -25,6 +20,7 @@ export class AuthController {
 
   /** 注册 */
   @Public()
+  // @Permission('user:create')
   @Post('sign-up')
   @HttpCode(HttpStatus.CREATED)
   async signUp(@Body(ValidationPipe) signUpDto: SignUpDto) {

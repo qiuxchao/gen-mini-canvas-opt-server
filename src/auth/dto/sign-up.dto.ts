@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, Length } from 'class-validator';
+import { IsMongoId, IsNotEmpty, IsString, Length } from 'class-validator';
 import { UserPermission } from 'src/user/user.entity';
 import { ObjectId } from 'typeorm';
 
@@ -21,6 +21,6 @@ export class SignUpDto {
   readonly permissions: UserPermission[];
 
   @IsNotEmpty()
-  @IsString({ each: true })
+  @IsMongoId({ each: true })
   readonly excludeProjects: ObjectId[];
 }

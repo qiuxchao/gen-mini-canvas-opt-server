@@ -26,14 +26,17 @@ export class AuthService {
     const { username, password } = signInDto;
     const user = await this.userRepository.findOne({ where: { username } });
     if (!user) {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('用户不存在', HttpStatus.NOT_FOUND);
     }
     const isPasswordValid = await this.hashingService.compare(
       password,
       user.password,
     );
     if (!isPasswordValid) {
-      throw new HttpException('Invalid password', HttpStatus.UNAUTHORIZED);
+      throw new HttpException('密码错误', HttpStatus.UNAUTHORIZED);
+    }
+    if (!user.isActive) {
+      throw new HttpException('用户被禁用', HttpStatus.UNAUTHORIZED);
     }
     return await this.generateToken(user);
   }
@@ -42,7 +45,6 @@ export class AuthService {
   async generateToken(user: User) {
     const token = await this.signToken<Partial<ActiveUserData>>(user.id, {
       username: user.username,
-      permissions: user.permissions.join(','),
     });
     return {
       token,
@@ -72,7 +74,7 @@ export class AuthService {
       where: { username },
     });
     if (existingUser) {
-      throw new HttpException('User already exists', HttpStatus.CONFLICT);
+      throw new HttpException('用户已存在', HttpStatus.CONFLICT);
     }
     // 生成hash密码
     const hashedPassword = await this.hashingService.hash(password);

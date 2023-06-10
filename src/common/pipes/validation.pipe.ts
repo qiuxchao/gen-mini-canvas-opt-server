@@ -14,11 +14,18 @@ export class ValidationPipe implements PipeTransform {
   async transform(value: any, metadata: ArgumentMetadata) {
     const DTO = plainToInstance(metadata.metatype, value);
     console.log('Pipe DTO: ', DTO);
-    const errors = await validate(DTO);
+    const errors = await validate(DTO, {
+      whitelist: true, // 过滤掉未在DTO中定义的属性
+    });
     if (errors.length) {
-      console.log('Piepe errors: ', errors);
-      throw new HttpException(errors, HttpStatus.BAD_REQUEST);
+      console.log('Pipe errors: ', errors);
+      throw new HttpException(
+        `参数错误：\n${errors
+          .map((error) => JSON.stringify(error.constraints))
+          .join('\n')}`,
+        HttpStatus.BAD_REQUEST,
+      );
     }
-    return value;
+    return DTO;
   }
 }

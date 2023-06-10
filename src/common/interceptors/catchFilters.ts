@@ -19,11 +19,11 @@ export class HttpFilter implements ExceptionFilter {
     const status = exception.getStatus();
 
     response.status(status).json({
-      data: exception.getResponse() || exception.message,
-      time: new Date().getTime(),
+      code: status,
+      data: null,
+      message: exception.message || '系统繁忙，请稍后再试～',
       success: false,
       path: request.url,
-      code: status,
     });
   }
 }
