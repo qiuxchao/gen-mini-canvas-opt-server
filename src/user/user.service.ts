@@ -51,7 +51,8 @@ export class UserService {
     const { id, type, permissions } = body;
     const user = await this.userRepository.findOne(new ObjectId(id));
     if (!user) throw new HttpException('用户不存在', HttpStatus.NOT_FOUND);
-    await this.userRepository.update(user.id, {
+    delete user.id;
+    await this.userRepository.update(id, {
       ...user,
       permissions:
         type === 1
@@ -61,7 +62,7 @@ export class UserService {
             ),
       updateTime: new Date().getTime(),
     });
-    return this.userRepository.findOne(new ObjectId(user.id));
+    return true;
   }
 
   /** 设置不拥有的项目 */
@@ -69,7 +70,8 @@ export class UserService {
     const { id, type, excludeProjects } = body;
     const user = await this.userRepository.findOne(new ObjectId(id));
     if (!user) throw new HttpException('用户不存在', HttpStatus.NOT_FOUND);
-    await this.userRepository.update(user.id, {
+    delete user.id;
+    await this.userRepository.update(id, {
       ...user,
       excludeProjects:
         type === 1
@@ -79,6 +81,6 @@ export class UserService {
             ),
       updateTime: new Date().getTime(),
     });
-    return this.userRepository.findOne(new ObjectId(user.id));
+    return true;
   }
 }

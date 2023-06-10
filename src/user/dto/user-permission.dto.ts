@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsIn } from 'class-validator';
+import { IsNotEmpty, IsString, IsIn, IsMongoId } from 'class-validator';
 import { UserPermission } from '../user.entity';
 import { ObjectId } from 'typeorm';
 
@@ -6,7 +6,7 @@ import { ObjectId } from 'typeorm';
 export class UserPermissionDto {
   /** 用户 ID */
   @IsNotEmpty()
-  @IsString()
+  @IsMongoId()
   readonly id: ObjectId;
 
   /** type 1: 添加 2: 删除 */

@@ -54,14 +54,16 @@ export class UserController {
   /** 设置用户权限 */
   @Permission('user:permission')
   @Post('permission')
-  userPermission(@Body(ValidationPipe) body: UserPermissionDto): Promise<any> {
+  async userPermission(
+    @Body(ValidationPipe) body: UserPermissionDto,
+  ): Promise<any> {
     return this.userService.setPermission(body);
   }
 
   /** 设置不拥有的项目 */
   @Permission('user:exclude-project')
-  @Post('exclude-projects')
-  userExcludeProject(
+  @Post('exclude-project')
+  async userExcludeProject(
     @Body(ValidationPipe) body: UserExcludeProjectDto,
   ): Promise<any> {
     return this.userService.setExcludeProjects(body);
