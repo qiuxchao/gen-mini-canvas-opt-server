@@ -27,6 +27,8 @@ export class DrawBoardService {
       new ObjectId(projectId),
     );
     if (!project) throw new HttpException('项目不存在', HttpStatus.NOT_FOUND);
+    if (user.excludeProjects.includes(projectId))
+      throw new HttpException('无权限', HttpStatus.FORBIDDEN);
     const drawBoard = this.drawBroadRepository.create({
       name,
       cover: '',
@@ -49,7 +51,9 @@ export class DrawBoardService {
   }
 
   /** 获取画板列表 */
-  async getDrawBoardList(id: string): Promise<DrawBoard[]> {
+  async getDrawBoardList(user: User, id: string): Promise<DrawBoard[]> {
+    if (user.excludeProjects.includes(id))
+      throw new HttpException('无权限', HttpStatus.FORBIDDEN);
     return this.drawBroadRepository.find({ projectId: id });
   }
 
@@ -61,6 +65,8 @@ export class DrawBoardService {
     const { id, ...restBody } = body;
     const drawBoard = await this.drawBroadRepository.findOne(new ObjectId(id));
     if (!drawBoard) throw new HttpException('画板不存在', HttpStatus.NOT_FOUND);
+    if (user.excludeProjects.includes(drawBoard.projectId))
+      throw new HttpException('无权限', HttpStatus.FORBIDDEN);
     Object.keys(restBody).forEach((key) => {
       drawBoard[key] = body[key];
     });
@@ -79,7 +85,15 @@ export class DrawBoardService {
   }
 
   /** 删除画板 */
-  async deleteDrawBoard(ids: string[]): Promise<boolean> {
+  async deleteDrawBoard(user: User, ids: string[]): Promise<boolean> {
+    const drawBoards = await this.drawBroadRepository.find({
+      _id: { $in: ids.map((id) => new ObjectId(id)) },
+    });
+    if (drawBoards.length !== ids.length)
+      throw new HttpException('画板不存在', HttpStatus.NOT_FOUND);
+    const projectIds = drawBoards.map((item) => item.projectId);
+    if (user.excludeProjects.some((id) => projectIds.includes(id)))
+      throw new HttpException('无权限', HttpStatus.FORBIDDEN);
     await this.drawBroadRepository.deleteMany({
       _id: { $in: ids.map((id) => new ObjectId(id)) },
     });
@@ -87,13 +101,14 @@ export class DrawBoardService {
   }
 
   /** 获取画板详情 */
-  async getDrawBoardDetail(id: string): Promise<DrawBoard> {
+  async getDrawBoardDetail(user: User, id: string): Promise<DrawBoard> {
     const drawBoard = await this.drawBroadRepository.findOne(new ObjectId(id));
     if (!drawBoard) throw new HttpException('画板不存在', HttpStatus.NOT_FOUND);
+    if (user.excludeProjects.includes(drawBoard.projectId))
+      throw new HttpException('无权限', HttpStatus.FORBIDDEN);
     const project = await this.projectRepository.findOne(
       new ObjectId(drawBoard.projectId),
     );
-    console.log(drawBoard, project);
     if (!project) throw new HttpException('项目不存在', HttpStatus.NOT_FOUND);
     drawBoard.projectName = project.name;
     return this.drawBroadRepository.save(drawBoard);

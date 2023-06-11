@@ -26,9 +26,11 @@ export class DrawBoardController {
   /** 获取画板列表 */
   @Get('list')
   async getDrawBoardList(
+    @Req() req,
     @Query(ValidationPipe) query: DrawBoardListDto,
   ): Promise<DrawBoard[]> {
     const drawBoards = await this.drawBoardService.getDrawBoardList(
+      req.user,
       query.projectId,
     );
     return drawBoards.map((drawBoard) =>
@@ -49,18 +51,20 @@ export class DrawBoardController {
   @Permission('draw-board:delete')
   @Post('delete')
   deleteDrawBoard(
+    @Req() req,
     @Body(ValidationPipe) body: DrawBoardDeleteDto,
   ): Promise<boolean> {
     const { ids } = body;
-    return this.drawBoardService.deleteDrawBoard(ids);
+    return this.drawBoardService.deleteDrawBoard(req.user, ids);
   }
 
   /** 获取画板详情 */
   @Get('detail')
   async getDrawBoardDetail(
+    @Req() req,
     @Query(ValidationPipe) query: DrawBoardDetailDto,
   ): Promise<DrawBoard> {
     const { id } = query;
-    return this.drawBoardService.getDrawBoardDetail(id);
+    return this.drawBoardService.getDrawBoardDetail(req.user, id);
   }
 }
