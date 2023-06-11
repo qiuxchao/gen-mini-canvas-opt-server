@@ -25,19 +25,23 @@ export class DrawBoard {
   projectName: string;
 
   /** 画板宽度 */
-  @Column()
+  @Column({
+    default: 375,
+  })
   @Exclude()
   width: number;
 
   /** 画板高度 */
-  @Column()
+  @Column({
+    default: 600,
+  })
   @Exclude()
   height: number;
 
   /** 画板数据(json字符串) */
   @Column()
   @Exclude()
-  data: string;
+  json: string;
 
   /** 操作人列表 */
   @Column('json')

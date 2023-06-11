@@ -5,7 +5,9 @@ import { ObjectId } from 'typeorm';
 export class UserExcludeProjectDto {
   /** 用户 ID */
   @IsNotEmpty()
-  @IsMongoId()
+  @IsMongoId({
+    message: '用户 ID 无效',
+  })
   readonly id: ObjectId;
 
   /** type 1: 添加 2: 删除 */
@@ -14,6 +16,6 @@ export class UserExcludeProjectDto {
   readonly type: 1 | 2;
 
   @IsNotEmpty()
-  @IsMongoId({ each: true })
+  @IsMongoId({ message: 'ID有误', each: true })
   readonly excludeProjects: string[];
 }

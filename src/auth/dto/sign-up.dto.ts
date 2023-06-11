@@ -21,6 +21,6 @@ export class SignUpDto {
   readonly permissions: UserPermission[];
 
   @IsNotEmpty()
-  @IsMongoId({ each: true })
+  @IsMongoId({ message: 'ID有误', each: true })
   readonly excludeProjects: string[];
 }

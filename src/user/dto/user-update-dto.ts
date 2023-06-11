@@ -11,7 +11,9 @@ import { UserPermission } from '../user.entity';
 /** 更新用户DTO */
 export class UserUpdateDto {
   @IsNotEmpty()
-  @IsMongoId()
+  @IsMongoId({
+    message: '用户 ID 无效',
+  })
   readonly id: ObjectId;
 
   @IsOptional()
@@ -35,6 +37,6 @@ export class UserUpdateDto {
   permissions: UserPermission[];
 
   @IsOptional()
-  @IsMongoId({ each: true })
+  @IsMongoId({ message: 'ID有误', each: true })
   readonly excludeProjects: string[];
 }
