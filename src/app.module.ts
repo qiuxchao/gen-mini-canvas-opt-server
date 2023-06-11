@@ -9,6 +9,7 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ProjectModule } from './project/project.module';
 import { DrawBoardModule } from './draw-board/draw-board.module';
+import { ToolModule } from './tool/tool.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { DrawBoardModule } from './draw-board/draw-board.module';
     AuthModule,
     ProjectModule,
     DrawBoardModule,
+    ToolModule,
   ],
   controllers: [AppController],
   providers: [AppService],
