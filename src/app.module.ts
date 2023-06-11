@@ -8,7 +8,7 @@ import { MongoConnectionOptions } from 'typeorm/driver/mongodb/MongoConnectionOp
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ProjectModule } from './project/project.module';
-import { DrawBoradModule } from './draw-borad/draw-borad.module';
+import { DrawBoardModule } from './draw-board/draw-board.module';
 
 @Module({
   imports: [
@@ -38,7 +38,7 @@ import { DrawBoradModule } from './draw-borad/draw-borad.module';
     UserModule,
     AuthModule,
     ProjectModule,
-    DrawBoradModule,
+    DrawBoardModule,
   ],
   controllers: [AppController],
   providers: [AppService],

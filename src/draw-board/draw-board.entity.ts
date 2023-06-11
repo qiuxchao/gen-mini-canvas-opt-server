@@ -1,8 +1,8 @@
 import { Entity, Column, ObjectIdColumn, ObjectId } from 'typeorm';
 import { Exclude } from 'class-transformer';
 
-@Entity('draw-borad')
-export class DrawBorad {
+@Entity('draw-board')
+export class DrawBoard {
   @ObjectIdColumn()
   id: ObjectId;
 
@@ -38,6 +38,16 @@ export class DrawBorad {
   @Column()
   @Exclude()
   data: string;
+
+  /** 操作人列表 */
+  @Column('json')
+  @Exclude()
+  operators: {
+    /** 操作人id */
+    id: ObjectId;
+    /** 操作人姓名 */
+    name: string;
+  }[];
 
   /** 创建时间 */
   @Column({

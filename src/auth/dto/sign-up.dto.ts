@@ -22,5 +22,5 @@ export class SignUpDto {
 
   @IsNotEmpty()
   @IsMongoId({ each: true })
-  readonly excludeProjects: ObjectId[];
+  readonly excludeProjects: string[];
 }

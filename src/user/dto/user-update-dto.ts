@@ -36,5 +36,5 @@ export class UserUpdateDto {
 
   @IsOptional()
   @IsMongoId({ each: true })
-  readonly excludeProjects: ObjectId[];
+  readonly excludeProjects: string[];
 }

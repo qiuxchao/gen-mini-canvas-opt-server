@@ -15,5 +15,5 @@ export class UserExcludeProjectDto {
 
   @IsNotEmpty()
   @IsMongoId({ each: true })
-  readonly excludeProjects: ObjectId[];
+  readonly excludeProjects: string[];
 }

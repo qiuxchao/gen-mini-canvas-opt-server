@@ -11,7 +11,7 @@ export class Project {
 
   /** 项目封面列表 */
   @Column()
-  permissions: string[];
+  covers: string[];
 
   /** 创建时间 */
   @Column({

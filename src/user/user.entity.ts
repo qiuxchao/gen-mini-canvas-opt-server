@@ -46,7 +46,7 @@ export class User {
   /** 不拥有的项目（项目id列表） */
   @Column()
   @Exclude()
-  excludeProjects: ObjectId[];
+  excludeProjects: string[];
 
   /** 是否激活 */
   @Column({ default: true })
