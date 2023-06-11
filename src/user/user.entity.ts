@@ -19,7 +19,7 @@ export type UserPermission =
   | 'user:permission'
   | 'user:exclude-project'
   | 'project:delete'
-  | 'draw:delete';
+  | 'draw-board:delete';
 
 @Entity('user')
 export class User {

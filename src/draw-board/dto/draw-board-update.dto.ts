@@ -15,18 +15,27 @@ export class DrawBoardUpdateDto {
   readonly id: string;
 
   @IsOptional()
+  @IsNotEmpty()
   @IsString()
   readonly name: string;
 
+  @IsOptional()
   @IsNotEmpty()
   @IsNumber()
   readonly width: number;
 
+  @IsOptional()
   @IsNotEmpty()
   @IsNumber()
   readonly height: number;
 
+  @IsOptional()
   @IsNotEmpty()
   @IsString()
   readonly json: string;
+
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  readonly cover: string;
 }

@@ -14,7 +14,7 @@ export class ProjectService {
 
   /** 新建项目 */
   async createProject(name: string): Promise<boolean> {
-    const project = await this.projectRepository.create({
+    const project = this.projectRepository.create({
       name,
       covers: [],
       createTime: Date.now(),
@@ -28,7 +28,6 @@ export class ProjectService {
   async getProjectList(user: User): Promise<Project[]> {
     const { excludeProjects } = user;
     const projects = await this.projectRepository.find();
-    console.log('projects', projects, excludeProjects);
     return projects.filter(
       (project) => !excludeProjects.includes(project.id.toString()),
     );

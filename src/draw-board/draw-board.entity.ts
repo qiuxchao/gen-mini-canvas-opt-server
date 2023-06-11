@@ -15,9 +15,9 @@ export class DrawBoard {
   cover: string;
 
   /** 所属项目id */
-  @ObjectIdColumn()
+  @Column()
   @Exclude()
-  projectId: ObjectId;
+  projectId: string;
 
   /** 所属项目名称 */
   @Column()
@@ -45,7 +45,6 @@ export class DrawBoard {
 
   /** 操作人列表 */
   @Column('json')
-  @Exclude()
   operators: {
     /** 操作人id */
     id: ObjectId;

@@ -7,7 +7,9 @@ export class DrawBoardCreateDto {
   readonly name: string;
 
   @IsNotEmpty()
-  @IsMongoId()
+  @IsMongoId({
+    message: '项目 ID 无效',
+  })
   readonly projectId: string;
 
   @IsNotEmpty()

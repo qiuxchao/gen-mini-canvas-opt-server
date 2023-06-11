@@ -5,6 +5,7 @@ export class DrawBoardDeleteDto {
   @IsNotEmpty()
   @IsMongoId({
     message: '画板 ID 无效',
+    each: true,
   })
-  readonly id: string;
+  readonly ids: string[];
 }
