@@ -34,6 +34,7 @@ export class ProjectService {
     const projects = await this.projectRepository.find({
       order: { updatedTime: 'DESC' },
     });
+
     const list = projects.filter(
       (project) => !excludeProjects.includes(project.id.toString()),
     );
@@ -51,6 +52,7 @@ export class ProjectService {
         .filter((cover) => Boolean(cover.cover))
         .map((cover) => cover.cover);
     }
+
     return list;
   }
 

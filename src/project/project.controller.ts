@@ -24,10 +24,7 @@ export class ProjectController {
   /** 获取项目列表 */
   @Get('list')
   async getProjectList(@Req() request): Promise<Project[]> {
-    const projects = await this.projectService.getProjectList(request.user);
-    return projects.map((project) =>
-      Object.assign(new Project(), plainToClass(Project, project)),
-    );
+    return this.projectService.getProjectList(request.user);
   }
 
   /** 更新项目 */
