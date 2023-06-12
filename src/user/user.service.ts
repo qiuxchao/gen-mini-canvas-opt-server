@@ -24,7 +24,6 @@ export class UserService {
 
   /** 更新用户 */
   async updateUser(newUser: UserUpdateDto): Promise<User> {
-    console.log(newUser);
     const { id, ...restUser } = newUser;
     const user = await this.userRepository.findOne(new ObjectId(id));
     if (!user) throw new HttpException('用户不存在', HttpStatus.NOT_FOUND);

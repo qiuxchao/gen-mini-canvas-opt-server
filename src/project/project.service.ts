@@ -4,12 +4,15 @@ import { Project } from './project.entity';
 import { MongoRepository } from 'typeorm';
 import { ObjectId } from 'mongodb';
 import { User } from 'src/user/user.entity';
+import { DrawBoard } from 'src/draw-board/draw-board.entity';
 
 @Injectable()
 export class ProjectService {
   constructor(
     @InjectRepository(Project)
     private readonly projectRepository: MongoRepository<Project>,
+    @InjectRepository(DrawBoard)
+    private readonly drawBroadRepository: MongoRepository<DrawBoard>,
   ) {}
 
   /** 新建项目 */
@@ -17,6 +20,7 @@ export class ProjectService {
     const project = this.projectRepository.create({
       name,
       covers: [],
+      boardCount: 0,
       createdTime: Date.now(),
       updatedTime: Date.now(),
     });
@@ -30,9 +34,24 @@ export class ProjectService {
     const projects = await this.projectRepository.find({
       order: { updatedTime: 'DESC' },
     });
-    return projects.filter(
+    const list = projects.filter(
       (project) => !excludeProjects.includes(project.id.toString()),
     );
+    for (const project of list) {
+      project.boardCount = await this.drawBroadRepository.count({
+        projectId: project.id.toString(),
+      });
+      const covers = await this.drawBroadRepository.find({
+        where: { projectId: project.id.toString() },
+        order: { updatedTime: 'DESC' },
+        take: 2,
+        select: ['cover'],
+      });
+      project.covers = covers
+        .filter((cover) => Boolean(cover.cover))
+        .map((cover) => cover.cover);
+    }
+    return list;
   }
 
   /** 更新项目 */

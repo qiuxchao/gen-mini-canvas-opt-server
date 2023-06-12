@@ -55,7 +55,7 @@ export class DrawBoardService {
     if (user.excludeProjects.includes(id))
       throw new HttpException('无权限', HttpStatus.FORBIDDEN);
     return this.drawBroadRepository.find({
-      projectId: id,
+      where: { projectId: id },
       order: { updatedTime: 'DESC' },
     });
   }

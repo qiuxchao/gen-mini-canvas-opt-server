@@ -24,7 +24,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   // 验证完成后将调用此方法，将此方法的返回值注入到请求对象中
   // 如：@Req() request，request.user 就是此处返回的对象
   async validate(payload: ActiveUserData) {
-    console.log('JwtStrategy validate: ', payload);
     const user = await this.userRepository.findOneBy(new ObjectId(payload.sub));
     console.log('JwtStrategy validate user: ', user);
     if (!user) {
