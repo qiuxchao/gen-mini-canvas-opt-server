@@ -27,7 +27,9 @@ export class ProjectService {
   /** 获取项目列表 */
   async getProjectList(user: User): Promise<Project[]> {
     const { excludeProjects } = user;
-    const projects = await this.projectRepository.find();
+    const projects = await this.projectRepository.find({
+      order: { updatedTime: 'DESC' },
+    });
     return projects.filter(
       (project) => !excludeProjects.includes(project.id.toString()),
     );

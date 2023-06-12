@@ -19,7 +19,7 @@ export class UserService {
 
   /** 获取用户列表 */
   async getUserList(): Promise<User[]> {
-    return this.userRepository.find();
+    return this.userRepository.find({ order: { updatedTime: 'DESC' } });
   }
 
   /** 更新用户 */

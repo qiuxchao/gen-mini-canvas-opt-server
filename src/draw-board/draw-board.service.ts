@@ -54,7 +54,10 @@ export class DrawBoardService {
   async getDrawBoardList(user: User, id: string): Promise<DrawBoard[]> {
     if (user.excludeProjects.includes(id))
       throw new HttpException('无权限', HttpStatus.FORBIDDEN);
-    return this.drawBroadRepository.find({ projectId: id });
+    return this.drawBroadRepository.find({
+      projectId: id,
+      order: { updatedTime: 'DESC' },
+    });
   }
 
   /** 更新画板 */
