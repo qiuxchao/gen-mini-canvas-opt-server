@@ -7,6 +7,6 @@ export class SignInDto {
 
   @IsNotEmpty()
   @IsString()
-  @Length(6, 20)
+  @Length(6, 100)
   readonly password: string;
 }

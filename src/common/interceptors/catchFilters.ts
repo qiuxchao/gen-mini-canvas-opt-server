@@ -18,7 +18,7 @@ export class HttpFilter implements ExceptionFilter {
 
     const status = exception.getStatus();
 
-    response.status(status).json({
+    response.status(200).json({
       code: status,
       data: null,
       message: exception.message || '系统繁忙，请稍后再试～',

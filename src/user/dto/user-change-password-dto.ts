@@ -4,11 +4,11 @@ import { IsNotEmpty, IsString, Length } from 'class-validator';
 export class UserChangePasswordDto {
   @IsNotEmpty()
   @IsString()
-  @Length(6, 20)
+  @Length(6, 100)
   readonly oldPassword: string;
 
   @IsNotEmpty()
   @IsString()
-  @Length(6, 20)
+  @Length(6, 100)
   readonly newPassword: string;
 }
