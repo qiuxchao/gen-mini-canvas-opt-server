@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Project } from './project.entity';
 import { MongoRepository } from 'typeorm';
@@ -57,6 +57,7 @@ export class ProjectService {
   /** 更新项目 */
   async updateProject(id: ObjectId, name: string): Promise<boolean> {
     const project = await this.projectRepository.findOne(new ObjectId(id));
+    if (!project) throw new HttpException('项目不存在', HttpStatus.NOT_FOUND);
     project.name = name;
     project.updatedTime = Date.now();
     await this.projectRepository.save(project);
