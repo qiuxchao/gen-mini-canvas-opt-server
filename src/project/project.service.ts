@@ -17,8 +17,8 @@ export class ProjectService {
     const project = this.projectRepository.create({
       name,
       covers: [],
-      createTime: Date.now(),
-      updateTime: Date.now(),
+      createdTime: Date.now(),
+      updatedTime: Date.now(),
     });
     await this.projectRepository.save(project);
     return true;
@@ -37,7 +37,7 @@ export class ProjectService {
   async updateProject(id: ObjectId, name: string): Promise<boolean> {
     const project = await this.projectRepository.findOne(new ObjectId(id));
     project.name = name;
-    project.updateTime = Date.now();
+    project.updatedTime = Date.now();
     await this.projectRepository.save(project);
     return true;
   }

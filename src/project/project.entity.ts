@@ -13,16 +13,20 @@ export class Project {
   @Column()
   covers: string[];
 
+  /** 项目下画板的数量 */
+  @Column()
+  boardCount: number;
+
   /** 创建时间 */
   @Column({
     default: Date.now(),
     update: false,
   })
-  createTime: number;
+  createdTime: number;
 
   /** 更新时间 */
   @Column({
     default: Date.now(),
   })
-  updateTime: number;
+  updatedTime: number;
 }

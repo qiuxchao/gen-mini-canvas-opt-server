@@ -57,11 +57,11 @@ export class DrawBoard {
     default: Date.now(),
     update: false,
   })
-  createTime: number;
+  createdTime: number;
 
   /** 更新时间 */
   @Column({
     default: Date.now(),
   })
-  updateTime: number;
+  updatedTime: number;
 }

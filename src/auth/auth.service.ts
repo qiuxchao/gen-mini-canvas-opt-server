@@ -82,8 +82,8 @@ export class AuthService {
       ...restSignUpDto,
       username,
       password: hashedPassword,
-      createTime: new Date().getTime(),
-      updateTime: new Date().getTime(),
+      createdTime: new Date().getTime(),
+      updatedTime: new Date().getTime(),
       isActive: true,
     });
     await this.userRepository.save(user);

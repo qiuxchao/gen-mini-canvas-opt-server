@@ -20,9 +20,9 @@
   /** 是否激活(排除) */
   isActive: boolean;
   /** 创建时间 */
-  createTime: number;
+  createdTime: number;
   /** 更新时间 */
-  updateTime: number;
+  updatedTime: number;
 }
 ```
 
@@ -37,10 +37,12 @@
   name: string;
   /** 项目封面列表 */
   covers: string[];
+  /** 项目下画板的数量 */
+  boardCount: number;
   /** 创建时间 */
-  createTime: number;
+  createdTime: number;
   /** 更新时间 */
-  updateTime: number;
+  updatedTime: number;
 }
 ```
 
@@ -66,8 +68,8 @@
   /** 画板数据 json 字符串(列表排除) */
   data: string;
   /** 创建时间 */
-  createTime: number;
+  createdTime: number;
   /** 更新时间 */
-  updateTime: number;
+  updatedTime: number;
 }
 ```

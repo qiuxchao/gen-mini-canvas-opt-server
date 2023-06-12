@@ -58,11 +58,11 @@ export class User {
     default: Date.now(),
     update: false, // 不更新
   })
-  createTime: number;
+  createdTime: number;
 
   /** 更新时间 */
   @Column({
     default: Date.now(),
   })
-  updateTime: number;
+  updatedTime: number;
 }

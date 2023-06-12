@@ -34,7 +34,7 @@ export class UserService {
     delete user.id;
     await this.userRepository.update(id, {
       ...user,
-      updateTime: new Date().getTime(),
+      updatedTime: new Date().getTime(),
     });
     return this.userRepository.findOne(new ObjectId(id));
   }
@@ -63,7 +63,7 @@ export class UserService {
           : user.permissions.filter(
               (permission) => !permissions.includes(permission),
             ),
-      updateTime: new Date().getTime(),
+      updatedTime: new Date().getTime(),
     });
     return true;
   }
@@ -82,7 +82,7 @@ export class UserService {
           : user.excludeProjects.filter(
               (excludeProject) => !excludeProjects.includes(excludeProject),
             ),
-      updateTime: new Date().getTime(),
+      updatedTime: new Date().getTime(),
     });
     return true;
   }
@@ -101,7 +101,7 @@ export class UserService {
     await this.userRepository.update(id, {
       ...restUser,
       password: hashedPassword,
-      updateTime: new Date().getTime(),
+      updatedTime: new Date().getTime(),
     });
     return true;
   }

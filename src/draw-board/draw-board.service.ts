@@ -35,8 +35,8 @@ export class DrawBoardService {
       json: '[]',
       width: width || 375,
       height: height || 600,
-      createTime: Date.now(),
-      updateTime: Date.now(),
+      createdTime: Date.now(),
+      updatedTime: Date.now(),
       projectId: project.id.toString(),
       projectName: project.name,
       operators: [
@@ -70,7 +70,7 @@ export class DrawBoardService {
     Object.keys(restBody).forEach((key) => {
       drawBoard[key] = body[key];
     });
-    drawBoard.updateTime = Date.now();
+    drawBoard.updatedTime = Date.now();
     drawBoard.operators = [
       {
         id: user.id,
