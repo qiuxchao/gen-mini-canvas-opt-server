@@ -17,6 +17,14 @@ export class Project {
   @Column()
   boardCount: number;
 
+  /** OSS bucket */
+  @Column()
+  ossBucket: string;
+
+  /** OSS path */
+  @Column()
+  ossPath: string;
+
   /** 创建时间 */
   @Column({
     default: Date.now(),

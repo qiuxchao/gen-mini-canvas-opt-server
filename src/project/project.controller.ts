@@ -16,8 +16,7 @@ export class ProjectController {
   async createProject(
     @Body(ValidationPipe) body: ProjectCreateDto,
   ): Promise<boolean> {
-    const { name } = body;
-    return this.projectService.createProject(name);
+    return this.projectService.createProject(body);
   }
 
   /** 获取项目列表 */

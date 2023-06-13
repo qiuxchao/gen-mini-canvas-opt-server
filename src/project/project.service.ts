@@ -5,6 +5,7 @@ import { MongoRepository } from 'typeorm';
 import { ObjectId } from 'mongodb';
 import { User } from 'src/user/user.entity';
 import { DrawBoard } from 'src/draw-board/draw-board.entity';
+import { ProjectCreateDto } from './dto/project-create.dto';
 
 @Injectable()
 export class ProjectService {
@@ -16,9 +17,12 @@ export class ProjectService {
   ) {}
 
   /** 新建项目 */
-  async createProject(name: string): Promise<boolean> {
+  async createProject(body: ProjectCreateDto): Promise<boolean> {
+    const { name, ossBucket = '', ossPath = '' } = body;
     const project = this.projectRepository.create({
       name,
+      ossBucket,
+      ossPath,
       covers: [],
       boardCount: 0,
       createdTime: Date.now(),
