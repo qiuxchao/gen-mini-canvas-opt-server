@@ -3,7 +3,6 @@ import { ProjectService } from './project.service';
 import { ProjectCreateDto } from './dto/project-create.dto';
 import { ValidationPipe } from 'src/common/pipes/validation.pipe';
 import { Project } from './project.entity';
-import { plainToClass } from 'class-transformer';
 import { ProjectUpdateDto } from './dto/project-update.dto';
 import { Permission } from 'src/common/decorators/permission.decorator';
 import { ProjectDeleteDto } from './dto/project-delete.dto';
