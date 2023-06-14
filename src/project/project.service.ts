@@ -81,4 +81,11 @@ export class ProjectService {
     });
     return true;
   }
+
+  /** 获取项目信息 */
+  async getProjectInfo(id: string): Promise<Project> {
+    const project = await this.projectRepository.findOne(new ObjectId(id));
+    if (!project) throw new HttpException('项目不存在', HttpStatus.NOT_FOUND);
+    return project;
+  }
 }
