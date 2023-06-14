@@ -7,6 +7,11 @@ import {
 
 import { Request, Response } from 'express';
 
+const msgMap = {
+  401: '未授权，请重新登录',
+  403: '拒绝访问',
+};
+
 /** 异常过滤器 */
 @Catch(HttpException)
 export class HttpFilter implements ExceptionFilter {
@@ -21,7 +26,7 @@ export class HttpFilter implements ExceptionFilter {
     response.status(200).json({
       code: status,
       data: null,
-      message: exception.message || '系统繁忙，请稍后再试～',
+      message: msgMap[status] || exception.message || '系统繁忙，请稍后再试～',
       success: false,
       path: request.url,
     });

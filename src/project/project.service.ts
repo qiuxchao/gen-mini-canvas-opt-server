@@ -6,6 +6,7 @@ import { ObjectId } from 'mongodb';
 import { User } from 'src/user/user.entity';
 import { DrawBoard } from 'src/draw-board/draw-board.entity';
 import { ProjectCreateDto } from './dto/project-create.dto';
+import { ProjectUpdateDto } from './dto/project-update.dto';
 
 @Injectable()
 export class ProjectService {
@@ -61,10 +62,13 @@ export class ProjectService {
   }
 
   /** 更新项目 */
-  async updateProject(id: ObjectId, name: string): Promise<boolean> {
+  async updateProject(body: ProjectUpdateDto): Promise<boolean> {
+    const { id, name, ossBucket = '', ossPath = '' } = body;
     const project = await this.projectRepository.findOne(new ObjectId(id));
     if (!project) throw new HttpException('项目不存在', HttpStatus.NOT_FOUND);
     project.name = name;
+    project.ossBucket = ossBucket;
+    project.ossPath = ossPath;
     project.updatedTime = Date.now();
     await this.projectRepository.save(project);
     return true;

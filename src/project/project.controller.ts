@@ -30,8 +30,7 @@ export class ProjectController {
   async updateProject(
     @Body(ValidationPipe) body: ProjectUpdateDto,
   ): Promise<boolean> {
-    const { id, name } = body;
-    return this.projectService.updateProject(id, name);
+    return this.projectService.updateProject(body);
   }
 
   /** 删除项目 */

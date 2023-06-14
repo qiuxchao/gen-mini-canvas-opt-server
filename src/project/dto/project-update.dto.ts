@@ -1,4 +1,4 @@
-import { IsMongoId, IsNotEmpty, IsString } from 'class-validator';
+import { IsMongoId, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { ObjectId } from 'typeorm';
 
 /** 更新项目DTO */
@@ -12,4 +12,14 @@ export class ProjectUpdateDto {
   @IsNotEmpty()
   @IsString()
   readonly name: string;
+
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  readonly ossBucket: string;
+
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  readonly ossPath: string;
 }
