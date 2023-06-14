@@ -34,7 +34,7 @@ export class DrawBoardService {
       cover: '',
       json: '[]',
       width: width || 375,
-      height: height || 600,
+      height: height || 667,
       createdTime: Date.now(),
       updatedTime: Date.now(),
       projectId: project.id.toString(),

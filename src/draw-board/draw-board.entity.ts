@@ -33,7 +33,7 @@ export class DrawBoard {
 
   /** 画板高度 */
   @Column({
-    default: 600,
+    default: 667,
   })
   @Exclude()
   height: number;
