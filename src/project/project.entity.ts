@@ -25,6 +25,10 @@ export class Project {
   @Column()
   ossPath: string;
 
+  /** OSS 域名 */
+  @Column()
+  ossDomain: string;
+
   /** 创建时间 */
   @Column({
     default: Date.now(),

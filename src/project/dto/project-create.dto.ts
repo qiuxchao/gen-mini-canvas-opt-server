@@ -15,4 +15,9 @@ export class ProjectCreateDto {
   @IsNotEmpty()
   @IsString()
   readonly ossPath: string;
+
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  readonly ossDomain: string;
 }

@@ -1,16 +1,10 @@
-import { IsMongoId, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { Express } from 'express';
 
-/** 更新项目DTO */
+/** 上传文件DTO */
 export class ProjectUpdateDto {
   @IsNotEmpty()
-  @IsMongoId({
-    message: '项目 ID 无效',
-  })
-  readonly id: string;
-
-  @IsNotEmpty()
-  @IsString()
-  readonly name: string;
+  readonly file: Express.Multer.File;
 
   @IsOptional()
   @IsNotEmpty()

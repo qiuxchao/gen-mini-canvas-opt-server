@@ -19,11 +19,12 @@ export class ProjectService {
 
   /** 新建项目 */
   async createProject(body: ProjectCreateDto): Promise<boolean> {
-    const { name, ossBucket = '', ossPath = '' } = body;
+    const { name, ossBucket = '', ossPath = '', ossDomain = '' } = body;
     const project = this.projectRepository.create({
       name,
       ossBucket,
       ossPath,
+      ossDomain,
       covers: [],
       boardCount: 0,
       createdTime: Date.now(),
@@ -63,12 +64,13 @@ export class ProjectService {
 
   /** 更新项目 */
   async updateProject(body: ProjectUpdateDto): Promise<boolean> {
-    const { id, name, ossBucket = '', ossPath = '' } = body;
+    const { id, name, ossBucket = '', ossPath = '', ossDomain = '' } = body;
     const project = await this.projectRepository.findOne(new ObjectId(id));
     if (!project) throw new HttpException('项目不存在', HttpStatus.NOT_FOUND);
     project.name = name;
     project.ossBucket = ossBucket;
     project.ossPath = ossPath;
+    project.ossDomain = ossDomain;
     project.updatedTime = Date.now();
     await this.projectRepository.save(project);
     return true;
