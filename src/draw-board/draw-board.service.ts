@@ -23,10 +23,6 @@ export class DrawBoardService {
     body: DrawBoardCreateDto,
   ): Promise<boolean> {
     const { name, projectId, width, height } = body;
-    const project = await this.projectRepository.findOne(
-      new ObjectId(projectId),
-    );
-    if (!project) throw new HttpException('项目不存在', HttpStatus.NOT_FOUND);
     if (user.excludeProjects.includes(projectId))
       throw new HttpException('无权限', HttpStatus.FORBIDDEN);
     const drawBoard = this.drawBroadRepository.create({
@@ -37,8 +33,7 @@ export class DrawBoardService {
       height: height || 667,
       createdTime: Date.now(),
       updatedTime: Date.now(),
-      projectId: project.id.toString(),
-      projectName: project.name,
+      projectId,
       operators: [
         {
           id: user.id,
@@ -47,6 +42,7 @@ export class DrawBoardService {
       ],
     });
     await this.drawBroadRepository.save(drawBoard);
+    this.syncProjectsData([projectId]);
     return true;
   }
 
@@ -84,6 +80,7 @@ export class DrawBoardService {
       ),
     ];
     await this.drawBroadRepository.save(drawBoard);
+    this.syncProjectsData([drawBoard.projectId]);
     return true;
   }
 
@@ -100,6 +97,7 @@ export class DrawBoardService {
     await this.drawBroadRepository.deleteMany({
       _id: { $in: ids.map((id) => new ObjectId(id)) },
     });
+    this.syncProjectsData(projectIds);
     return true;
   }
 
@@ -113,7 +111,45 @@ export class DrawBoardService {
       new ObjectId(drawBoard.projectId),
     );
     if (!project) throw new HttpException('项目不存在', HttpStatus.NOT_FOUND);
-    drawBoard.projectName = project.name;
-    return this.drawBroadRepository.save(drawBoard);
+    drawBoard.project = project;
+    return drawBoard;
+  }
+
+  /** 画板改变时，同步项目数据 */
+  async syncProjectsData(projectIds: string[]): Promise<void> {
+    if (!projectIds.length) return;
+    for (const id of projectIds) {
+      this.updateProjectData(id);
+    }
+  }
+
+  /** 更新单个项目数据 */
+  async updateProjectData(projectId: string): Promise<void> {
+    if (!projectId) return;
+    const project = await this.projectRepository.findOne(
+      new ObjectId(projectId),
+    );
+    if (!project) return;
+    const covers = await this.drawBroadRepository.find({
+      where: { projectId: project.id.toString() },
+      order: { updatedTime: 'DESC' },
+      select: ['cover'],
+    });
+    const newCovers = covers
+      .filter((cover) => Boolean(cover.cover))
+      .map((cover) => cover.cover)
+      .slice(0, 2);
+    const boardCount = await this.drawBroadRepository.count({
+      projectId: project.id.toString(),
+    });
+    if (
+      project.covers.join(',') === newCovers.join(',') &&
+      project.boardCount === boardCount
+    )
+      return;
+    project.covers = newCovers;
+    project.boardCount = boardCount;
+    project.updatedTime = Date.now();
+    await this.projectRepository.save(project);
   }
 }

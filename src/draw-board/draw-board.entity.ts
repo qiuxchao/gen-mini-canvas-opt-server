@@ -1,5 +1,6 @@
 import { Entity, Column, ObjectIdColumn, ObjectId } from 'typeorm';
 import { Exclude } from 'class-transformer';
+import { Project } from 'src/project/project.entity';
 
 @Entity('draw-board')
 export class DrawBoard {
@@ -14,15 +15,15 @@ export class DrawBoard {
   @Column()
   cover: string;
 
-  /** 所属项目id */
+  /** 所属项目 */
   @Column()
   @Exclude()
   projectId: string;
 
-  /** 所属项目名称 */
+  /** 所属项目 */
   @Column()
   @Exclude()
-  projectName: string;
+  project: Project;
 
   /** 画板宽度 */
   @Column({

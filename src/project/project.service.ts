@@ -44,21 +44,6 @@ export class ProjectService {
     const list = projects.filter(
       (project) => !excludeProjects.includes(project.id.toString()),
     );
-    for (const project of list) {
-      project.boardCount = await this.drawBroadRepository.count({
-        projectId: project.id.toString(),
-      });
-      const covers = await this.drawBroadRepository.find({
-        where: { projectId: project.id.toString() },
-        order: { updatedTime: 'DESC' },
-        take: 2,
-        select: ['cover'],
-      });
-      project.covers = covers
-        .filter((cover) => Boolean(cover.cover))
-        .map((cover) => cover.cover);
-    }
-
     return list;
   }
 
