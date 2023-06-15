@@ -66,6 +66,9 @@ export class ProjectService {
     await this.projectRepository.deleteMany({
       _id: { $in: ids.map((id) => new ObjectId(id)) },
     });
+    await this.drawBroadRepository.deleteMany({
+      projectId: { $in: ids },
+    });
     return true;
   }
 
