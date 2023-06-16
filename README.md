@@ -1,99 +1,12 @@
-## 数据库设计
+构建 & pm2 启动：
 
-### User
-
-用户
-
-```ts
-{
-  id: string;
-  /** 账号 */
-  username: string;
-  /** 密码(排除) */
-  password: string;
-  /** 姓名 */
-  name: string;
-  /** 权限 delete: 删除（有此权限才能删除项目和画板） */
-  permissions: string[];
-  /** 不拥有的项目（项目id列表）(排除) */
-  excludeProjects: string[];
-  /** 是否激活(排除) */
-  isActive: boolean;
-  /** 创建时间 */
-  createdTime: number;
-  /** 更新时间 */
-  updatedTime: number;
-}
+```
+npm run build
+cd dist
+pm2 start
 ```
 
-### Project
-
-项目
-
-```ts
-{
-  id: string;
-  /** 项目名 */
-  name: string;
-  /** 项目封面列表 */
-  covers: string[];
-  /** 项目下画板的数量 */
-  boardCount: number;
-  /** 创建时间 */
-  createdTime: number;
-  /** 更新时间 */
-  updatedTime: number;
-}
-```
-
-### DrawBoard
-
-画板
-
-```ts
-{
-  id: string;
-  /** 画板名 */
-  name: string;
-  /** 封面 */
-  cover: string;
-  /** 所属项目id(列表排除) */
-  projectId: string;
-  /** 所属项目名称(列表排除) */
-  projectName: string;
-  /** 画板宽度(列表排除) */
-  width: number;
-  /** 画板高度(列表排除) */
-  height: number;
-  /** 画板数据 json 字符串(列表排除) */
-  data: string;
-  /** 创建时间 */
-  createdTime: number;
-  /** 更新时间 */
-  updatedTime: number;
-}
-```
-
-Prom
-
-结合当前这个 Nestjs 项目，帮我写一篇标题为 「Nestjs 实践」的文章，文章需要列出 Nestjs 各个功能的解释以及其在当前项目中的应用，并添加部分关键代码。 以 markdown 格式输出代码，英文关键字用 `` 包裹，英文单词两侧添加空格。
-
-我给你一个大纲：
-
-- NestJS 是什么
-- NestJS 的基本功能
-  - 模块化架构
-  - 依赖注入
-  - Controller、Service、Module
-- 本项目中用到的 NestJS 的功能
-  - 数据库(MongoDB & TypeORM)
-  - JWT + Passport 鉴权 & 自定义鉴权
-  - 路由守卫 & 自定义装饰器(接口拦截)
-  - 异常过滤器
-  - 响应拦截器
-  - 管道验证 DTO
-
-## 服务端
+# 服务端
 
 服务端使用 [NestJS](https://nestjs.com/) 编写，下面这部分内容，我将简单分享 NestJS 在服务端的一些实践经验，并介绍 NestJS 的部分功能及其在服务端项目中的应用。
 
