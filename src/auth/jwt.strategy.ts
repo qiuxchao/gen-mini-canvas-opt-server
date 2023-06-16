@@ -30,7 +30,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       throw new HttpException('用户不存在', HttpStatus.NOT_FOUND);
     }
     if (user.isActive === false) {
-      throw new HttpException('用户被禁用', HttpStatus.UNAUTHORIZED);
+      throw new HttpException('用户被禁用', HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return user;
   }

@@ -14,7 +14,7 @@ pm2 start
 
 [NestJS](https://nestjs.com/) 是一个基于 Node.js 的**高效**、**可扩展**和**易于维护**的后端开发框架，它使用现代化的 JavaScript 和 TypeScript 语言来构建 Web 应用程序。
 
-NestJS 提供了一种模块化的方式来组织代码，并使用**依赖注入**来管理组件之间的依赖关系。它还提供了一组强大的工具和库，用于处理 HTTP 请求、数据库访问、身份验证和授权等常见任务。
+NestJS 提供了一种模块化的方式来组织代码，并使用**依赖注入**的方式来管理组件之间的依赖关系。它还提供了一组强大的工具和库，用于处理 HTTP 请求、数据库访问、身份验证和授权等常见任务。
 
 ## NestJS 的基本功能
 
@@ -127,16 +127,122 @@ export class User {
 
 在我们的项目中，我们使用 JWT(JSON Web Token) 和 Passport 来进行身份验证和授权。JWT 是一种现代化的身份验证和授权方式，它使用 JSON 格式的令牌来验证用户身份和授权访问。Passport 是一个身份验证模块，它提供了一些策略来处理身份验证。
 
+当用户登录成功后，JWT 鉴权的流程如下：
+
+1. 服务器生成一个 JWT 令牌，并将用户的 `id` 加密到令牌中。
+2. 服务器将 JWT 令牌发送给客户端，客户端将 JWT 令牌保存在本地。
+3. 客户端在每次请求时，将 JWT 令牌添加到请求头中的 `Authorization` 字段中。
+4. 服务器使用 Passport 中的 `AuthGuard` 路由守卫来拦截请求，并使用 Passport 的 JWT 策略来验证令牌的有效性。
+
+   - 路由守卫中还做了一个判断：如果是被 `@Public` 装饰的接口，则直接放行。
+
+5. 如果 JWT 令牌有效，则允许请求通过，并将用户信息放到请求信息中；否则返回 401 未授权错误。
+
 #### 自定义权限验证
 
-在我们的项目中，我们使用路由守卫和自定义装饰器来拦截 HTTP 请求。路由守卫是一个函数，它可以在 HTTP 请求到达控制器之前或响应离开控制器之后执行一些操作。自定义装饰器是一个函数，它可以在 HTTP 请求到达控制器之前或响应离开控制器之后执行一些操作。
+在用户的信息中，有一个 `permissions` 字段用于标识该用户对哪些字段具有访问权限，以便于做一些更细粒度的权限控制。
+
+为了验证用户权限，我们使用了自定义的权限验证逻辑：
+
+- 封装了 `@Permission` 装饰器，用于装饰那些需要特定权限才能访问的路由。
+- 编写了用于验证权限的路由守卫，在守卫中验证用户是否拥有该路由的访问权限，如果没有将会返回 403 拒绝访问错误。
 
 ### 异常过滤器
 
+在我们的项目中，使用了**异常过滤器**的来对 HTTP 请求中抛出的异常进行拦截和处理，将异常信息包装成一个对象，这个对象包含了状态码、错误信息、请求路径等信息。
+
+```ts
+const msgMap = {
+  400: '请求参数错误',
+  401: '未授权',
+  403: '禁止访问',
+  404: '资源不存在',
+  500: '服务器内部错误',
+};
+
+/** 异常过滤器 */
+@Catch(HttpException)
+export class HttpFilter implements ExceptionFilter {
+  catch(exception: HttpException, host: ArgumentsHost) {
+    console.log('HttpFilter catch: ', exception.getResponse());
+    const ctx = host.switchToHttp();
+    const request = ctx.getRequest<Request>();
+    const response = ctx.getResponse<Response>();
+
+    const status = exception.getStatus();
+
+    response.status(200).json({
+      code: status,
+      data: null,
+      message: msgMap[status] || exception.message || '系统繁忙，请稍后再试～',
+      success: false,
+      path: request.url,
+    });
+  }
+}
+```
+
 ### 响应拦截器
+
+在我们的项目中，使用了**响应拦截器**来对 HTTP 响应进行拦截和处理，将响应数据包装成一个对象，这个对象包含了响应数据、状态码、成功标志和消息等信息。
+
+```ts
+/** 响应拦截器 */
+@Injectable()
+export class Response<T = any> implements NestInterceptor {
+  intercept(context, next: CallHandler): Observable<data<T>> {
+    return next.handle().pipe(
+      map((data) => {
+        return {
+          data,
+          code: 200,
+          success: true,
+          message: 'success',
+        };
+      }),
+    );
+  }
+}
+```
 
 ### DTO 验证管道
 
-#### DTO 是什么？
+DTO 是什么？
 
-DTO 是 Data Transfer Object 的缩写，即数据传输对象。它是一种设计模式，用于在不同层之间传输数据。DTO 通常用于将数据从数据库层传输到业务逻辑层，或将数据从业务逻辑层传输到表示层（例如控制器）。DTO 通常是一个简单的数据结构，只包含数据字段和 getter/setter 方法。它们通常不包含业务逻辑或复杂的计算。在 NestJS 中，DTO 通常用于验证和转换 HTTP 请求和响应中的数据。
+- DTO 是 Data Transfer Object 的缩写，即数据传输对象。它是一种设计模式，用于在不同层之间传输数据。DTO 通常用于将数据从数据库层传输到业务逻辑层，或将数据从业务逻辑层传输到表示层（例如控制器）。DTO 通常是一个简单的数据结构，只包含数据字段和 getter/setter 方法。它们通常不包含业务逻辑或复杂的计算。在 NestJS 中，DTO 通常用于验证和转换 HTTP 请求和响应中的数据。
+
+在我们的项目中，使用了**管道**来对对 HTTP 请求中的数据进行验证，确保数据的正确性和完整性。使用 `class-validator` 库来验证 DTO 对象，并使用 `class-transformer` 库来将请求数据转换为 DTO 对象。
+
+```ts
+import {
+  ArgumentMetadata,
+  Injectable,
+  PipeTransform,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
+import { plainToInstance } from 'class-transformer';
+import { validate } from 'class-validator';
+
+/** DTO 验证管道 */
+@Injectable()
+export class ValidationPipe implements PipeTransform {
+  async transform(value: any, metadata: ArgumentMetadata) {
+    const DTO = plainToInstance(metadata.metatype, value);
+    console.log('Pipe DTO: ', DTO);
+    const errors = await validate(DTO, {
+      whitelist: true, // 过滤掉未在DTO中定义的属性
+    });
+    if (errors.length) {
+      console.log('Pipe errors: ', errors);
+      throw new HttpException(
+        `参数错误：\n${errors
+          .map((error) => JSON.stringify(error.constraints))
+          .join('\n')}`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    return DTO;
+  }
+}
+```

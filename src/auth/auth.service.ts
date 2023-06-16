@@ -33,10 +33,10 @@ export class AuthService {
       user.password,
     );
     if (!isPasswordValid) {
-      throw new HttpException('密码错误', HttpStatus.UNAUTHORIZED);
+      throw new HttpException('密码错误', HttpStatus.INTERNAL_SERVER_ERROR);
     }
     if (!user.isActive) {
-      throw new HttpException('用户被禁用', HttpStatus.UNAUTHORIZED);
+      throw new HttpException('用户被禁用', HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return await this.generateToken(user);
   }
