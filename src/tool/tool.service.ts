@@ -1,6 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { Readable } from 'node:stream';
-import { uploadStreamToOSS } from 'fx-shared-node';
+import { uploadBufferToOSS } from 'fx-shared-node';
 import { ProjectUpdateDto } from './dto/upload-dto';
 
 @Injectable()
@@ -11,15 +10,13 @@ export class ToolService {
     body: ProjectUpdateDto,
   ): Promise<string> {
     const { ossBucket, ossPath, ossDomain } = body;
-    // 将文件流转为 stream 流
-    const readableStream = Readable.from(file.buffer);
     try {
-      // 上传文件流到 OSS
-      let url = await uploadStreamToOSS({
+      // 上传文件到 OSS
+      let url = await uploadBufferToOSS({
         bucketName: ossBucket || 'fenxiang-crm',
         ossPath: ossPath || 'mini-canvas-tool/pic',
         fileName: file.originalname,
-        fileStream: readableStream,
+        buffer: file.buffer,
       });
       // 替换域名
       if (ossDomain) {
