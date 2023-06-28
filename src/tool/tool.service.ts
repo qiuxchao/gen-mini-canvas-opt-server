@@ -13,8 +13,8 @@ export class ToolService {
     try {
       // 上传文件到 OSS
       // let url = await uploadBufferToOSS({
-      //   bucketName: ossBucket || 'fenxiang-crm',
-      //   ossPath: ossPath || 'mini-canvas-tool/pic',
+      //   bucketName: ossBucket || '',
+      //   ossPath: ossPath || '',
       //   fileName: file.originalname,
       //   buffer: file.buffer,
       // });
