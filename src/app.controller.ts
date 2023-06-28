@@ -7,6 +7,6 @@ export class AppController {
 
   @Get()
   getRoot(): string {
-    return 'The Mini Canvas Options Server is running.';
+    return 'The Mini D2C Server is running.';
   }
 }

@@ -59,9 +59,13 @@ export class AuthService {
         ...payload,
       },
       {
+        // 密钥
         secret: this.jwtConfiguration.secret,
+        // 接收者
         audience: this.jwtConfiguration.audience,
+        // 签发者
         issuer: this.jwtConfiguration.issuer,
+        // 过期时间
         expiresIn: this.jwtConfiguration.accessTokenTtl,
       },
     );

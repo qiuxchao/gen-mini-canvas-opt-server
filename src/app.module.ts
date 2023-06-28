@@ -18,18 +18,19 @@ import { ToolModule } from './tool/tool.module';
         DB_HOST: Joi.string().required(),
         DB_PORT: Joi.number().default(27017),
         DB_DATABASE: Joi.string().required(),
+        DB_URL: Joi.string().required(),
         JWT_SECRET: Joi.string().required(),
         JWT_TOKEN_AUDIENCE: Joi.string().required(),
         JWT_TOKEN_ISSUER: Joi.string().required(),
         JWT_ACCESS_TOKEN_TTL: Joi.number().default(3600),
       }),
+      envFilePath: ['.env', '.env.local'],
     }),
     TypeOrmModule.forRootAsync({
       useFactory: () =>
         ({
           type: 'mongodb',
-          host: process.env.DB_HOST,
-          port: process.env.DB_PORT,
+          url: process.env.DB_URL,
           database: process.env.DB_DATABASE,
           entities: [__dirname + '/**/*.entity{.ts,.js}'],
           synchronize: true,
