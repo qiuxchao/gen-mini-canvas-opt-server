@@ -6,31 +6,6 @@
   "devCommand": "pnpm start:dev",
   "builds": [{ "src": "dist/main.js", "use": "@vercel/node" }],
   "routes": [
-    { "src": "/(.*)", "dest": "http://localhost:6923", "methods": ["GET"] },
-    {
-      "src": "/auth/(.*)",
-      "dest": "http://localhost:6923/auth/$1",
-      "methods": ["POST"]
-    },
-    {
-      "src": "/user/(.*)",
-      "dest": "http://localhost:6923/user/$1",
-      "methods": ["GET", "POST"]
-    },
-    {
-      "src": "/project/(.*)",
-      "dest": "http://localhost:6923/project/$1",
-      "methods": ["GET", "POST"]
-    },
-    {
-      "src": "/draw-board/(.*)",
-      "dest": "http://localhost:6923/draw-board/$1",
-      "methods": ["GET", "POST"]
-    },
-    {
-      "src": "/tool/(.*)",
-      "dest": "http://localhost:6923/tool/$1",
-      "methods": ["GET", "POST"]
-    }
+    { "src": "/(.*)", "dest": "dist/main.js", "methods": ["GET", "POST"] }
   ]
 }

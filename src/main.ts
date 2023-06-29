@@ -14,6 +14,6 @@ async function bootstrap() {
   app.useGlobalInterceptors(new Response());
   // 异常过滤器
   app.useGlobalFilters(new HttpFilter());
-  await app.listen(6923);
+  await app.listen(process.env.PORT || 6923);
 }
 bootstrap();
