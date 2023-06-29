@@ -25,14 +25,6 @@ export class AuthController {
     return this.authService.signIn(signInDto);
   }
 
-  /** 登录 */
-  @Public()
-  @Get('sign-in')
-  @HttpCode(HttpStatus.OK)
-  async signin() {
-    return true;
-  }
-
   /** 注册 */
   // @Public()
   @Permission('user:create')

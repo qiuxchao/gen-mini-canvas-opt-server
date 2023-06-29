@@ -7,6 +7,5 @@ export declare class AuthController {
     signIn(signInDto: SignInDto): Promise<{
         token: string;
     }>;
-    signin(): Promise<boolean>;
     signUp(signUpDto: SignUpDto): Promise<void>;
 }

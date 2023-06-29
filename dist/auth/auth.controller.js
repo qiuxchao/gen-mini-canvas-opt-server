@@ -27,9 +27,6 @@ let AuthController = exports.AuthController = class AuthController {
     async signIn(signInDto) {
         return this.authService.signIn(signInDto);
     }
-    async signin() {
-        return true;
-    }
     async signUp(signUpDto) {
         return this.authService.signUp(signUpDto);
     }
@@ -43,14 +40,6 @@ __decorate([
     __metadata("design:paramtypes", [sign_in_dto_1.SignInDto]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "signIn", null);
-__decorate([
-    (0, public_decorator_1.Public)(),
-    (0, common_1.Get)('sign-in'),
-    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], AuthController.prototype, "signin", null);
 __decorate([
     (0, permission_decorator_1.Permission)('user:create'),
     (0, common_1.Post)('sign-up'),
