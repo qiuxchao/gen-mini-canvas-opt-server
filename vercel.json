@@ -1,5 +1,9 @@
 {
   "version": 2,
+  "installCommand": "pnpm i",
+  "outputDirectory": "dist",
+  "buildCommand": "pnpm build",
+  "devCommand": "pnpm start:dev",
   "builds": [{ "src": "dist/main.js", "use": "@vercel/node" }],
   "routes": [
     { "src": "/(.*)", "dest": "dist/main.js", "methods": ["GET", "POST"] }
