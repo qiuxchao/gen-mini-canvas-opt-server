@@ -6,7 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   // 处理跨域
   app.enableCors({
-    origin: [/gen-canvas-opt-code\.vercel\.app$/],
+    origin: 'https://gen-canvas-opt-code.vercel.app',
     methods: ['GET', 'POST'],
     allowedHeaders:
       'Origin, X-Requested-With, Content-Type, Accept, Authentication, Access-control-allow-credentials, Access-control-allow-headers, Access-control-allow-methods, Access-control-allow-origin, User-Agent, Referer, Accept-Encoding, Accept-Language, Access-Control-Request-Headers, Cache-Control, Pragma, Authorization',
