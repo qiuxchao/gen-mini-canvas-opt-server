@@ -13,6 +13,7 @@ export class ProjectController {
   constructor(private readonly projectService: ProjectService) {}
 
   /** 新建项目 */
+  @Permission('project:create')
   @Post('create')
   async createProject(
     @Body(ValidationPipe) body: ProjectCreateDto,
@@ -27,6 +28,7 @@ export class ProjectController {
   }
 
   /** 更新项目 */
+  @Permission('project:update')
   @Post('update')
   async updateProject(
     @Body(ValidationPipe) body: ProjectUpdateDto,

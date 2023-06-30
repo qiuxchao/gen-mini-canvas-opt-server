@@ -15,6 +15,7 @@ export class DrawBoardController {
   constructor(private readonly drawBoardService: DrawBoardService) {}
 
   /** 新建画板 */
+  @Permission('draw-board:create')
   @Post('create')
   async createDrawBoard(
     @Req() req,
@@ -39,6 +40,7 @@ export class DrawBoardController {
   }
 
   /** 更新画板 */
+  @Permission('draw-board:update')
   @Post('update')
   async updateDrawBoard(
     @Req() req,

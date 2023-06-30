@@ -9,7 +9,7 @@ import { Request, Response } from 'express';
 
 const msgMap = {
   401: '未授权，请重新登录',
-  403: '拒绝访问',
+  403: '没有权限，请联系管理员',
 };
 
 /** 异常过滤器 */

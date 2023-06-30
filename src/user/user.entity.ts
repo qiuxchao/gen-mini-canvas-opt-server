@@ -8,7 +8,11 @@ import { Exclude } from 'class-transformer';
  * - `user:create`: 创建用户
  * - `user:permission`: 设置用户权限
  * - `user:exclude-project`: 设置不拥有的项目
+ * - `project:create`: 创建项目
+ * - `project:update`: 更新项目
  * - `project:delete`: 删除项目
+ * - `draw:create`: 创建画板
+ * - `draw:update`: 更新画板
  * - `draw:delete`: 删除画板
  */
 export type UserPermission =
@@ -18,7 +22,11 @@ export type UserPermission =
   | 'user:create'
   | 'user:permission'
   | 'user:exclude-project'
+  | 'project:create'
+  | 'project:update'
   | 'project:delete'
+  | 'draw-board:create'
+  | 'draw-board:update'
   | 'draw-board:delete';
 
 @Entity('user')
