@@ -11,6 +11,8 @@ import { ProjectModule } from './project/project.module';
 import { DrawBoardModule } from './draw-board/draw-board.module';
 import { ToolModule } from './tool/tool.module';
 
+const IS_TEST_ENV = false;
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -30,8 +32,10 @@ import { ToolModule } from './tool/tool.module';
       useFactory: () =>
         ({
           type: 'mongodb',
-          url: process.env.DB_URL,
-          database: process.env.DB_DATABASE,
+          url: IS_TEST_ENV ? 'mongodb://localhost:27017' : process.env.DB_URL,
+          database: IS_TEST_ENV
+            ? 'mini-canvas-options'
+            : process.env.DB_DATABASE,
           entities: [__dirname + '/**/*.entity{.ts,.js}'],
           synchronize: true,
           useUnifiedTopology: true,

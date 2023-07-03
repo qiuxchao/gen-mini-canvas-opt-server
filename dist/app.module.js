@@ -18,6 +18,8 @@ const auth_module_1 = require("./auth/auth.module");
 const project_module_1 = require("./project/project.module");
 const draw_board_module_1 = require("./draw-board/draw-board.module");
 const tool_module_1 = require("./tool/tool.module");
+console.log(process.env);
+const IS_TEST_ENV = process.env.NODE_ENV === '' ? false : false;
 let AppModule = exports.AppModule = class AppModule {
 };
 exports.AppModule = AppModule = __decorate([
@@ -39,8 +41,10 @@ exports.AppModule = AppModule = __decorate([
             typeorm_1.TypeOrmModule.forRootAsync({
                 useFactory: () => ({
                     type: 'mongodb',
-                    url: process.env.DB_URL,
-                    database: process.env.DB_DATABASE,
+                    url: IS_TEST_ENV ? 'mongodb://localhost:27017' : process.env.DB_URL,
+                    database: IS_TEST_ENV
+                        ? 'mini-canvas-options'
+                        : process.env.DB_DATABASE,
                     entities: [__dirname + '/**/*.entity{.ts,.js}'],
                     synchronize: true,
                     useUnifiedTopology: true,

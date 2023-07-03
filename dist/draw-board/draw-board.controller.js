@@ -48,6 +48,7 @@ let DrawBoardController = exports.DrawBoardController = class DrawBoardControlle
     }
 };
 __decorate([
+    (0, permission_decorator_1.Permission)('draw-board:create'),
     (0, common_1.Post)('create'),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Body)(validation_pipe_1.ValidationPipe)),
@@ -64,6 +65,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], DrawBoardController.prototype, "getDrawBoardList", null);
 __decorate([
+    (0, permission_decorator_1.Permission)('draw-board:update'),
     (0, common_1.Post)('update'),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Body)(validation_pipe_1.ValidationPipe)),

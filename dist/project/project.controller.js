@@ -44,6 +44,7 @@ let ProjectController = exports.ProjectController = class ProjectController {
     }
 };
 __decorate([
+    (0, permission_decorator_1.Permission)('project:create'),
     (0, common_1.Post)('create'),
     __param(0, (0, common_1.Body)(validation_pipe_1.ValidationPipe)),
     __metadata("design:type", Function),
@@ -58,6 +59,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ProjectController.prototype, "getProjectList", null);
 __decorate([
+    (0, permission_decorator_1.Permission)('project:update'),
     (0, common_1.Post)('update'),
     __param(0, (0, common_1.Body)(validation_pipe_1.ValidationPipe)),
     __metadata("design:type", Function),
