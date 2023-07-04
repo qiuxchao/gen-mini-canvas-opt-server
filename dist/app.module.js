@@ -18,8 +18,7 @@ const auth_module_1 = require("./auth/auth.module");
 const project_module_1 = require("./project/project.module");
 const draw_board_module_1 = require("./draw-board/draw-board.module");
 const tool_module_1 = require("./tool/tool.module");
-console.log(process.env);
-const IS_TEST_ENV = process.env.NODE_ENV === '' ? false : false;
+const IS_TEST_ENV = false;
 let AppModule = exports.AppModule = class AppModule {
 };
 exports.AppModule = AppModule = __decorate([

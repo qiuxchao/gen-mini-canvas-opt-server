@@ -101,6 +101,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "userExcludeProject", null);
 __decorate([
+    (0, permission_decorator_1.Permission)('user:password'),
     (0, common_1.Post)('password'),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Body)(validation_pipe_1.ValidationPipe)),
