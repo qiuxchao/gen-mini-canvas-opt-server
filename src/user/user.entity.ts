@@ -6,6 +6,7 @@ import { Exclude } from 'class-transformer';
  * - `user:delete`: 删除用户
  * - `user:update`: 更新用户
  * - `user:create`: 创建用户
+ * - `user:password`: 修改密码
  * - `user:permission`: 设置用户权限
  * - `user:exclude-project`: 设置不拥有的项目
  * - `project:create`: 创建项目
@@ -22,6 +23,7 @@ export type UserPermission =
   | 'user:create'
   | 'user:permission'
   | 'user:exclude-project'
+  | 'user:password'
   | 'project:create'
   | 'project:update'
   | 'project:delete'

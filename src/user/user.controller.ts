@@ -71,6 +71,7 @@ export class UserController {
   }
 
   /** 修改密码 */
+  @Permission('user:password')
   @Post('password')
   async changePassword(
     @Req() request,
