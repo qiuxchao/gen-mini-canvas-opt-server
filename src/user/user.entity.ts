@@ -15,6 +15,7 @@ import { Exclude } from 'class-transformer';
  * - `draw:create`: 创建画板
  * - `draw:update`: 更新画板
  * - `draw:delete`: 删除画板
+ * - `tool:upload`: 上传文件
  */
 export type UserPermission =
   | 'user:list'
@@ -29,7 +30,8 @@ export type UserPermission =
   | 'project:delete'
   | 'draw-board:create'
   | 'draw-board:update'
-  | 'draw-board:delete';
+  | 'draw-board:delete'
+  | 'tool:upload';
 
 @Entity('user')
 export class User {

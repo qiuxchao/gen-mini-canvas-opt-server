@@ -8,12 +8,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ToolModule = void 0;
 const common_1 = require("@nestjs/common");
+const axios_1 = require("@nestjs/axios");
 const tool_service_1 = require("./tool.service");
 const tool_controller_1 = require("./tool.controller");
 let ToolModule = exports.ToolModule = class ToolModule {
 };
 exports.ToolModule = ToolModule = __decorate([
     (0, common_1.Module)({
+        imports: [
+            axios_1.HttpModule.registerAsync({
+                useFactory: () => ({
+                    timeout: 10000,
+                    maxRedirects: 5,
+                }),
+            }),
+        ],
         controllers: [tool_controller_1.ToolController],
         providers: [tool_service_1.ToolService],
     })

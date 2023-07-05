@@ -18,6 +18,7 @@ const tool_service_1 = require("./tool.service");
 const platform_express_1 = require("@nestjs/platform-express");
 const upload_dto_1 = require("./dto/upload-dto");
 const validation_pipe_1 = require("../common/pipes/validation.pipe");
+const permission_decorator_1 = require("../common/decorators/permission.decorator");
 let ToolController = exports.ToolController = class ToolController {
     constructor(toolService) {
         this.toolService = toolService;
@@ -28,6 +29,7 @@ let ToolController = exports.ToolController = class ToolController {
     }
 };
 __decorate([
+    (0, permission_decorator_1.Permission)('tool:upload'),
     (0, common_1.Post)('upload'),
     (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('file')),
     __param(0, (0, common_1.UploadedFile)()),
