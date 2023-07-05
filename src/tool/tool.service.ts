@@ -16,10 +16,9 @@ export class ToolService {
     const { ossBucket, ossPath, ossDomain } = body;
     const token = process.env.UPLOAD_TOKEN;
     const url = process.env.UPLOAD_URL;
-    const path = `${ossBucket}/${ossPath}/${file.originalname}`.replace(
-      /\/\//,
-      '/',
-    );
+    const path = `${ossBucket || 'mini_d2c'}/${ossPath || 'pics'}/${
+      file.originalname
+    }`.replace(/\/\//, '/');
     console.log(token, url, path);
     try {
       // 上传文件到 OSS

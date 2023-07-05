@@ -21,7 +21,7 @@ let ToolService = exports.ToolService = class ToolService {
         const { ossBucket, ossPath, ossDomain } = body;
         const token = process.env.UPLOAD_TOKEN;
         const url = process.env.UPLOAD_URL;
-        const path = `${ossBucket}/${ossPath}/${file.originalname}`.replace(/\/\//, '/');
+        const path = `${ossBucket || 'mini_d2c'}/${ossPath || 'pics'}/${file.originalname}`.replace(/\/\//, '/');
         console.log(token, url, path);
         try {
             const result = await (0, rxjs_1.firstValueFrom)(this.httpService
